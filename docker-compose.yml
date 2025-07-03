@@ -1,0 +1,21 @@
+# Definição dos serviços (containers)
+services:
+  # Serviço da nossa API FastAPI
+  api:
+    # Constrói a imagem a partir do Dockerfile no diretório atual (.)
+    build: .
+    container_name: api
+
+    # Comando para iniciar a aplicação com "hot-reload",
+    # que reinicia o servidor automaticamente quando você salva uma alteração no código.
+    command: uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+
+    # Mapeia a porta 8000 do seu computador para a porta 8000 do container,
+    # permitindo o acesso à API via http://localhost:8000
+    ports:
+      - "8000:8000"
+
+    # Monta o diretório atual (onde estão seus arquivos .py)
+    # dentro do container no diretório /app. Essencial para o hot-reload funcionar.
+    volumes:
+      - .:/app
